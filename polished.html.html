@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VARADARAJ PORTFOLIO</title>
+  <style>
+    /* CSS Variables for Themes */
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --secondary: #f472b6;
+      --border: #334155;
+    }
+
+    body.light-mode {
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent: #0284c7;
+      --secondary: #db2777;
+      --border: #e2e8f0;
+    }
+
+    /* Base Styling */
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 40px 20px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Centered Container */
+    .portfolio-container {
+      max-width: 650px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      padding: 32px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    /* Header & Titles */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      color: var(--accent);
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: 0.5px;
+    }
+
+    h3 {
+      color: var(--secondary);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 6px;
+      margin-top: 28px;
+      margin-bottom: 12px;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+    }
+
+    p, li {
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    ul {
+      padding-left: 20px;
+      margin-bottom: 20px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    /* Input & Form Styling */
+    .input-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    input[type="text"] {
+      padding: 10px 14px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--bg-color);
+      color: var(--text-main);
+      outline: none;
+      flex: 1;
+      font-size: 14px;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--accent);
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 10px 16px;
+      border-radius: 6px;
+      border: none;
+      background: var(--accent);
+      color: #0f172a;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .delete-btn {
+      background: none;
+      border: 1px solid #ef4444;
+      color: #ef4444;
+      padding: 2px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      margin-left: 10px;
+    }
+
+    .delete-btn:hover {
+      background: #ef4444;
+      color: white;
+    }
+
+    #error-message {
+      color: #ef4444;
+      display: block;
+      margin-top: 6px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="portfolio-container">
+    <header>
+      <h1>VARADARAJ PORTFOLIO</h1>
+      <button id="theme-btn" class="btn">Toggle Theme</button>
+    </header>
+
+    <h3>ABOUT ME</h3>
+    <p>I am learning web development and building my first coding projects.</p>
+
+    <h3>MY INTERESTS</h3>
+    <ul>
+      <li>CODING AND DESIGN</li>
+      <li>READING BOOKS</li>
+      <li>LEARNING NEW SKILLS</li>
+    </ul>
+
+    <h3>MY PROJECTS</h3>
+    <div class="input-group">
+      <input type="text" id="project-input" placeholder="Enter new project title">
+      <button id="add-project-btn" class="btn">Add Project</button>
+    </div>
+    <ul id="project-list">
+      <li>
+        Portfolio v1 Website 
+        <button class="delete-btn">Delete</button>
+      </li>
+    </ul>
+
+    <h3>CONTACT ME</h3>
+    <form id="contact-form">
+      <div style="margin-bottom: 10px;">
+        <label for="email" style="display: block; margin-bottom: 6px; color: var(--text-muted);">Email Address:</label>
+        <input type="text" id="email" placeholder="enter your email" style="width: 100%; box-sizing: border-box;">
+        <small id="error-message"></small>
+      </div>
+      <button type="submit" class="btn">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    // Task 1: Dark/Light Mode Toggle
+    const themeBtn = document.querySelector('#theme-btn');
+    themeBtn.addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+    });
+
+    // Task 2: Dynamic Project List
+    const projectInput = document.querySelector('#project-input');
+    const addProjectBtn = document.querySelector('#add-project-btn');
+    const projectList = document.querySelector('#project-list');
+
+    addProjectBtn.addEventListener('click', () => {
+      const projectTitle = projectInput.value.trim();
+
+      if (projectTitle === '') {
+        alert('Please enter a project title!');
+        return;
+      }
+
+      const newLi = document.createElement('li');
+      newLi.innerHTML = `
+        ${projectTitle} 
+        <button class="delete-btn">Delete</button>
+      `;
+
+      projectList.appendChild(newLi);
+      projectInput.value = '';
+    });
+
+    projectList.addEventListener('click', (event) => {
+      if (event.target.classList.contains('delete-btn')) {
+        event.target.parentElement.remove();
+      }
+    });
+
+    // Task 3: Form Email Validation
+    const form = document.querySelector('#contact-form');
+    const emailInput = document.querySelector('#email');
+    const errorMsg = document.querySelector('#error-message');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      
+      const emailValue = emailInput.value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (emailValue === '') {
+        errorMsg.textContent = 'Email cannot be empty.';
+      } else if (!emailRegex.test(emailValue)) {
+        errorMsg.textContent = 'Please enter a valid email address.';
+      } else {
+        errorMsg.textContent = '';
+        alert('Success! Form submitted.');
+        emailInput.value = '';
+      }
+    });
+  </script>
+</body>
+</html>
